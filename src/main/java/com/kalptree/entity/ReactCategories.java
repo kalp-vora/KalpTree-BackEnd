@@ -16,15 +16,15 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class Categories {
+public class ReactCategories {
     @Id
     @GeneratedValue
     @Column(nullable = false, updatable = false)
-    private Integer categoryId;
+    private Integer reactId;
 
-    @NotEmpty(message = "Please enter a category name")
+    @NotEmpty(message = "PLease enter a react name")
     @Column(nullable = false, unique = true)
-    private String categoryName;
+    private String reactName;
 
     @CreationTimestamp
     @Column(nullable = false)
