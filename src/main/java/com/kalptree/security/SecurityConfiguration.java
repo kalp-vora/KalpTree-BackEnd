@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -17,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfiguration {
 
-    final String[] PUBLIC_URLS = {"api/v1/register"};
+    final String[] PUBLIC_URLS = {"/api/register", "/api/login"};
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
@@ -37,17 +38,15 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception {
         return http
-                .cors()
-                .and()
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeRequests(auth -> {
-                    auth.antMatchers(PUBLIC_URLS).permitAll();
-                    auth.antMatchers("api/v1/admin/*").hasRole(String.valueOf(Roles.ADMIN));
-                    auth.antMatchers("api/v1/mod/*").hasAnyRole(String.valueOf(Roles.MODERATOR), String.valueOf(Roles.ADMIN));
-                    auth.antMatchers("api/v1/user/*").hasAnyRole(String.valueOf(Roles.USER), String.valueOf(Roles.MODERATOR), String.valueOf(Roles.ADMIN));
-                })
-                .httpBasic()
-                .and()
+                .authorizeRequests(auth -> auth
+                        .antMatchers(PUBLIC_URLS).permitAll()
+                        .antMatchers("api/admin/**").hasRole(String.valueOf(Roles.ADMIN))
+                        .antMatchers("api/mod/**").hasAnyRole(String.valueOf(Roles.MODERATOR), String.valueOf(Roles.ADMIN))
+                        .antMatchers("api/user/**").hasAnyRole(String.valueOf(Roles.USER), String.valueOf(Roles.MODERATOR), String.valueOf(Roles.ADMIN))
+                        .anyRequest().authenticated()
+                )
+                .httpBasic(Customizer.withDefaults())
                 .build();
     }
 
