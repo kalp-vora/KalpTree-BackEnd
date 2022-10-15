@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @ToString
 public class Categories {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Integer categoryId;
 

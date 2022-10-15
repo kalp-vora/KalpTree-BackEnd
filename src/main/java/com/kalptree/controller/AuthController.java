@@ -2,7 +2,6 @@ package com.kalptree.controller;
 
 import com.kalptree.model.Login;
 import com.kalptree.response.ResponseHandler;
-import com.kalptree.response.LoginFailedResponse;
 import com.kalptree.security.service.TokenService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.kalptree.response.ResponseMessageConstants.badCredentials;
+import static com.kalptree.response.ResponseMessageConstants.successAuthenticate;
+
 @RestController
 @RequestMapping("/api")
 public class AuthController {
 
-    private final LoginFailedResponse loginFailedResponse;
     private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthController(LoginFailedResponse loginFailedResponse, TokenService tokenService, AuthenticationManager authenticationManager) {
-        this.loginFailedResponse = loginFailedResponse;
+    public AuthController(TokenService tokenService, AuthenticationManager authenticationManager) {
         this.tokenService = tokenService;
         this.authenticationManager = authenticationManager;
     }
@@ -36,11 +36,8 @@ public class AuthController {
         try {
             authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.email(), login.password()));
         } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(loginFailedResponse);
+            return new ResponseEntity<>(ResponseHandler.generateResponse(badCredentials, HttpStatus.NOT_FOUND, null), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(
-                ResponseHandler.generateResponse("Successfully Authenticated",
-                        HttpStatus.OK, tokenService.generateToken(authentication)),
-                HttpStatus.OK);
+        return new ResponseEntity<>(ResponseHandler.generateResponse(successAuthenticate, HttpStatus.OK, tokenService.generateToken(authentication)), HttpStatus.OK);
     }
 }

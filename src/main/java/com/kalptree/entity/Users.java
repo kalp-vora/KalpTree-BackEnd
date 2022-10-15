@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 public class Users {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Long userId;
 
