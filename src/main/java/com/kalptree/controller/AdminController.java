@@ -1,7 +1,9 @@
 package com.kalptree.controller;
 
 import com.kalptree.entity.Categories;
+import com.kalptree.entity.ReactCategories;
 import com.kalptree.exception.CategoryAlreadyExistException;
+import com.kalptree.exception.ReactCategoryAlreadyExistException;
 import com.kalptree.response.ResponseHandler;
 import com.kalptree.service.AdminService;
 import org.springframework.http.HttpStatus;
@@ -13,8 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-import static com.kalptree.response.ResponseMessageConstants.categorySuccess;
-import static com.kalptree.response.ResponseMessageConstants.categoryAlreadyExist;
+import static com.kalptree.response.ResponseMessageConstants.*;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -32,8 +33,19 @@ public class AdminController {
         try {
             newCategory = adminService.addCategory(category);
         } catch (CategoryAlreadyExistException e) {
-            return new ResponseEntity<>(ResponseHandler.generateResponse(categoryAlreadyExist, HttpStatus.CONFLICT, null), HttpStatus.CONFLICT);
+            return ResponseHandler.generateResponse(categoryAlreadyExist, HttpStatus.CONFLICT, null);
         }
-        return new ResponseEntity<>(ResponseHandler.generateResponse(categorySuccess, HttpStatus.CREATED, newCategory), HttpStatus.CREATED);
+        return ResponseHandler.generateResponse(successCategoryAdded, HttpStatus.CREATED, newCategory);
+    }
+
+    @PostMapping("/react/add")
+    public ResponseEntity<?> addReactCategory(@Valid @RequestBody ReactCategories reactCategory) {
+        ReactCategories newReact;
+        try {
+            newReact = adminService.addReactCategory(reactCategory);
+        } catch (ReactCategoryAlreadyExistException e) {
+            return ResponseHandler.generateResponse(reactCategoryAlreadyExist, HttpStatus.CONFLICT, null);
+        }
+        return ResponseHandler.generateResponse(successReactCategoryAdded, HttpStatus.CREATED, newReact);
     }
 }

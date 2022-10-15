@@ -36,8 +36,8 @@ public class AuthController {
         try {
             authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.email(), login.password()));
         } catch (AuthenticationException e) {
-            return new ResponseEntity<>(ResponseHandler.generateResponse(badCredentials, HttpStatus.NOT_FOUND, null), HttpStatus.NOT_FOUND);
+            return ResponseHandler.generateResponse(badCredentials, HttpStatus.NOT_FOUND, null);
         }
-        return new ResponseEntity<>(ResponseHandler.generateResponse(successAuthenticate, HttpStatus.OK, tokenService.generateToken(authentication)), HttpStatus.OK);
+        return ResponseHandler.generateResponse(successAuthenticate, HttpStatus.OK, tokenService.generateToken(authentication));
     }
 }

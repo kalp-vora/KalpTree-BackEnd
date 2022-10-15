@@ -29,9 +29,9 @@ public class UserController {
         try {
             newUser = userService.addUser(user);
         } catch (UserAlreadyExistException e) {
-            return new ResponseEntity<>(ResponseHandler.generateResponse(userAlreadyExist, HttpStatus.CONFLICT, null), HttpStatus.CONFLICT);
+            return ResponseHandler.generateResponse(userAlreadyExist, HttpStatus.CONFLICT, null);
         }
-        return new ResponseEntity<>(ResponseHandler.generateResponse(successUserAdded, HttpStatus.CREATED, newUser), HttpStatus.CREATED);
+        return ResponseHandler.generateResponse(successUserAdded, HttpStatus.CREATED, newUser);
     }
 
 }
