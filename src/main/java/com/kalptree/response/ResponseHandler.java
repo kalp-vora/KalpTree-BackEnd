@@ -29,11 +29,13 @@ public class ResponseHandler extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
 
         Map<String, String> errors = new HashMap<>();
+
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String message = error.getDefaultMessage();
             errors.put(fieldName, message);
         });
+
         Map<String, Object> response = new HashMap<>();
         response.put("message", "FAILED");
         response.put("status", status.name());
