@@ -2,10 +2,12 @@
 Kalp Tree is a blogging portal
 
 DEPENDENCIES:
-  SPRING DATA JPA
-  SPRING WEB
-  SPRING SECURITY
-  VALIDATION
-  LOMBOK
-  SPRING DEVELOPERS TOOLS
-  MYSQL DRIVERS
+  Spring Data JPA
+  Sprign Web
+  OAuth2 Resource Server
+  Spring Configuration Proccessor
+  Spring Security
+  Validation
+  Lombok
+  Spring Developer Tools
+  MySQL Drivers
