@@ -3,10 +3,10 @@ Kalp Tree is a blogging portal
 
 DEPENDENCIES:
   Spring Data JPA
-  Spring Web
-  Spring Security
+  Sprign Web
   OAuth2 Resource Server
   Spring Configuration Proccessor
+  Spring Security
   Validation
   Lombok
   Spring Developer Tools
