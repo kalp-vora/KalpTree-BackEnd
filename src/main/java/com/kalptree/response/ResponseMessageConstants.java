@@ -11,7 +11,6 @@ public class ResponseMessageConstants {
     public static final String successBlogAdded = success + "BLOG ADDED";
     public static final String userAlreadyExist = fail + "USER ALREADY EXIST";
     public static final String categoryAlreadyExist = fail + "CATEGORY ALREADY EXIST";
-
     public static final String reactCategoryAlreadyExist = fail + "REACT ALREADY EXIST";
     public static final String badCredentials = "BAD CREDENTIALS";
 
