@@ -18,9 +18,7 @@ public class ResponseHandler extends ResponseEntityExceptionHandler {
     public static ResponseEntity<?> generateResponse(String message, HttpStatus status, Object responseObj) {
         Map<String, Object> map = new HashMap<>();
         map.put("message", message);
-        map.put("status", status.value());
         map.put("data", responseObj);
-
         return new ResponseEntity<>(map, status);
     }
 
@@ -38,8 +36,6 @@ public class ResponseHandler extends ResponseEntityExceptionHandler {
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", "FAILED");
-        response.put("status", status.name());
-        response.put("status_code", status.value());
         response.put("errors", errors);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

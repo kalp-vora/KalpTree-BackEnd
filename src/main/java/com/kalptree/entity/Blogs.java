@@ -22,15 +22,14 @@ public class Blogs {
     @Column(nullable = false, updatable = false)
     private Long blogId;
 
-    @NotEmpty(message = "Please enter a title")
+    @NotEmpty(message = "Required Title")
     @Column(nullable = false)
     private String title;
 
-    @NotEmpty(message = "Please enter some content")
+    @NotEmpty(message = "Required Content")
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @NotEmpty(message = "Please enter a publish date and time")
     @Column(nullable = false)
     private LocalDateTime publishDateTime;
 

@@ -26,35 +26,35 @@ public class Users {
     @Column(nullable = false, updatable = false)
     private Long userId;
 
-    @NotEmpty(message = "Please enter a name")
+    @NotEmpty(message = "Required Name 'FirstName LastName' ")
     @Column(nullable = false)
     private String name;
 
-    @NotNull(message = "Please enter a gender")
+    @NotNull(message = "Required Gender 'M|F|T' ")
     @Column(nullable = false)
     private Character gender;
 
-    @NotNull(message = "Please enter a date of birth")
+    @NotNull(message = "Required Date of Birth 'yyyy-mm-dd' ")
     @Column(nullable = false)
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
 
-    @NotEmpty(message = "Please enter an email address")
+    @NotEmpty(message = "Required Email Address")
     @Length(min = 5)
     @Email
     @Column(nullable = false, unique = true, length = 50)
     private String email;
 
-    @NotEmpty(message = "Please enter a password")
+    @NotEmpty(message = "Required Password")
     @Column(nullable = false)
     private String password;
 
-    @NotEmpty(message = "Please enter a contact number")
+    @NotEmpty(message = "Required Contact Number '91Number'")
     @Length(min = 12, max = 12)
     @Column(nullable = false, length = 12)
     private String contactNumber;
 
-    @NotEmpty(message = "Please enter a role")
+    @NotEmpty(message = "Required Role 'USER|MODERATOR|ADMIN' ")
     @Column(nullable = false)
     private String role;
 
