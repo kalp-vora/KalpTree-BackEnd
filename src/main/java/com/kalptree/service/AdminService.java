@@ -8,6 +8,7 @@ import com.kalptree.repository.CategoryRepository;
 import com.kalptree.repository.ReactCategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.kalptree.response.ResponseMessageConstants.categoryAlreadyExist;
@@ -30,6 +31,10 @@ public class AdminService {
             throw new CategoryAlreadyExistException(categoryAlreadyExist);
         }
         return categoryRepository.save(category);
+    }
+
+    public List<Categories> fetchAllCategory() {
+        return categoryRepository.findAll();
     }
 
     public ReactCategories addReactCategory(ReactCategories react) throws ReactCategoryAlreadyExistException {

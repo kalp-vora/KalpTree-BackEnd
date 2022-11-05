@@ -5,10 +5,7 @@ import com.kalptree.response.ResponseHandler;
 import com.kalptree.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,9 +20,16 @@ public class BlogController {
         this.blogService = blogService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/user/add")
     public ResponseEntity<?> addBlog(@Valid @RequestBody Blogs blog) {
         Blogs newBlog = blogService.addBlog(blog);
         return ResponseHandler.generateResponse(successBlogAdded, HttpStatus.CREATED, newBlog);
     }
+
+    // TODO: ADD THIS FUNCTIONALITY
+//    @GetMapping("/all/{email}")
+//    public ResponseEntity<?> viewBlogsOfUser(@PathVariable("email") String email) {
+//        Blogs newBlog = blogService.addBlog(blog);
+//        return ResponseHandler.generateResponse(successBlogAdded, HttpStatus.CREATED, newBlog);
+//    }
 }
