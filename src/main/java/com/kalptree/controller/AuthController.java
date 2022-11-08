@@ -1,14 +1,12 @@
 package com.kalptree.controller;
 
+import com.kalptree.exception.AuthenticationException;
 import com.kalptree.model.Login;
+import com.kalptree.model.LoginResponse;
 import com.kalptree.response.ResponseHandler;
-import com.kalptree.security.service.TokenService;
+import com.kalptree.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,23 +19,22 @@ import static com.kalptree.response.ResponseMessageConstants.successAuthenticate
 @RequestMapping("/api")
 public class AuthController {
 
-    private final TokenService tokenService;
-    private final AuthenticationManager authenticationManager;
+    private final AuthService authService;
 
-    public AuthController(TokenService tokenService, AuthenticationManager authenticationManager) {
-        this.tokenService = tokenService;
-        this.authenticationManager = authenticationManager;
+    public AuthController(AuthService authService) {
+        this.authService = authService;
     }
-
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Login login) {
-        Authentication authentication;
+        LoginResponse loginResponse;
         try {
-            authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.email(), login.password()));
+            loginResponse = authService.authenticateUser(login);
         } catch (AuthenticationException e) {
-            return ResponseHandler.generateResponse(badCredentials, HttpStatus.NOT_FOUND, null);
+            return ResponseHandler.generateResponse(badCredentials, HttpStatus.UNAUTHORIZED, null);
         }
-        return ResponseHandler.generateResponse(successAuthenticate, HttpStatus.OK, tokenService.generateToken(authentication));
+        return ResponseHandler.generateResponse(successAuthenticate, HttpStatus.OK, loginResponse);
+
     }
+
 }
