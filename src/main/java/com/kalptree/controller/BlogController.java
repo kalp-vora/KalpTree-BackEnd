@@ -41,7 +41,7 @@ public class BlogController {
             blogs = blogService.getBlogsOfUser(userId);
             blogs.forEach(blog -> userBlogs.add(new BlogsOfUserResponse(
                     blog.getBlogId(), blog.getUser().getUserId(),
-                    blog.getTitle(), blog.getContent(), blog.getCategory().getCategoryId(),
+                    blog.getTitle(), blog.getContent(), blog.getCategory().getCategoryId(), blog.getCategory().getCategoryName(),
                     blog.getPenName(), blog.getLikeCount(), blog.getFunnyCount(), blog.getInsightfulCount(),
                     blog.getCreationDateTime(), blog.getWrittenDateTime(), blog.getPublishDateTime(), blog.getModifiedDateTime())));
 
