@@ -31,6 +31,8 @@ public class Blogs {
     private String content;
 
     @Column(nullable = false)
+    private LocalDateTime writtenDateTime;
+
     private LocalDateTime publishDateTime;
 
     @Value("${default.penName: Anonymous}")
