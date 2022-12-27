@@ -27,16 +27,26 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.Arrays;
 import java.util.List;
 
-@EnableWebSecurity
 @Configuration
+@EnableWebMvc
+@EnableWebSecurity
 public class SecurityConfiguration {
 
     private RSAKey rsaKey;
-    final String[] PUBLIC_URLS = {"/api/register", "/api/login"};
+    final String[] PUBLIC_URLS = {
+            "/v3/api-docs",
+            "/v2/api-docs",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/webjars/**",
+            "/api/register",
+            "/api/login"
+    };
 
     @Bean
     public PasswordEncoder passwordEncoder() {
